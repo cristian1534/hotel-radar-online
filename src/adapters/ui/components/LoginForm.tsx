@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
-import { loginUserAsync } from '@/services/userService';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { loginUserAsync } from "@/services/userService";
+import { RootState } from "../redux/store/store";
 
 interface LoginFormProps {
   setShowLoginForm: (show: boolean) => void;
@@ -11,7 +12,7 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ setShowLoginForm, setError, error }: LoginFormProps) => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -26,9 +27,9 @@ const LoginForm = ({ setShowLoginForm, setError, error }: LoginFormProps) => {
     const result = await (dispatch as any)(loginUserAsync(formData));
     if (loginUserAsync.rejected.match(result)) {
       setError(result.payload as string);
-      setFormData({ email: '', password: '' });
+      setFormData({ email: "", password: "" });
     } else {
-      router.push('/panel');
+      router.push("/panel");
     }
   };
 
@@ -60,7 +61,7 @@ const LoginForm = ({ setShowLoginForm, setError, error }: LoginFormProps) => {
       </div>
       <div className="relative">
         <input
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           id="password"
           name="password"
           value={formData.password}
@@ -120,7 +121,7 @@ const LoginForm = ({ setShowLoginForm, setError, error }: LoginFormProps) => {
           type="button"
           className="text-brand-200"
           onClick={() => {
-            setError('');
+            setError("");
             setShowLoginForm(false);
           }}
         >

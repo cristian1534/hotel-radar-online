@@ -40,7 +40,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         setError(result.payload as string);
         setFormData({ username: "", email: "", password: "" });
       } else {
-        router.push("/panel");
+        router.push("/");
       }
     } catch (err: any) {
       console.log(err);

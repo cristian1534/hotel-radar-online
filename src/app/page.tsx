@@ -15,12 +15,11 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const dispatch = useDispatch();
-  const userLoading = useSelector((state: RootState) => state.user.loading);
+  const { loading } = useSelector((state: RootState) => state.user);
 
   const handleSubmitRegister = async (formData: any) => {
     try {
       const { email, password, username } = formData;
-      console.log(email, password, username);
       const result = await dispatch<any>(
         addUserAsync({ email, password, username })
       );
@@ -35,18 +34,22 @@ export default function Home() {
   };
 
   const handleSubmitLogin = async (formData: any) => {
-    const { email, password } = formData;
-    const result = await dispatch<any>(loginUserAsync({ email, password }));
-    if (loginUserAsync.rejected.match(result)) {
-      setError(result.payload as string);
-    } else {
-      router.push("/panel");
+    try {
+      const { email, password } = formData;
+      const result = await dispatch<any>(loginUserAsync({ email, password }));
+      if (loginUserAsync.rejected.match(result)) {
+        setError(result.payload as string);
+      } else {
+        router.push("/panel");
+      }
+    } catch (err: any) {
+      console.log(err);
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-brand-300">
-      {userLoading ? (
+      {loading ? (
         <Loader />
       ) : (
         <>

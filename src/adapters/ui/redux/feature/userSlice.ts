@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addUserAsync, loginUserAsync } from "@/services/userService";
+import {
+  addUserAsync,
+  loginUserAsync,
+  logoutUserAsync,
+} from "@/services/userService";
 import { UserEntity } from "@/domain/UserEntity";
 
 interface UserState {
@@ -52,6 +56,18 @@ export const UserEntitySlice = createSlice({
         }
       )
       .addCase(loginUserAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(logoutUserAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logoutUserAsync.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(logoutUserAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
