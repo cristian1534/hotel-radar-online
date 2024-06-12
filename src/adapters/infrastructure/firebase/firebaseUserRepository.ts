@@ -1,6 +1,6 @@
 import { UserEntity } from "@/domain/UserEntity";
 import { UserRepository } from "@/ports/UserRepository";
-import { addUserAsync, loginUserAsync } from "@/services/userService";
+import { addUserAsync, loginUserAsync, logoutUserAsync } from "@/services/userService";
 import { AppDispatch } from "@/adapters/ui/redux/store/store";
 
 export class FirebaseUserRepository implements UserRepository {
@@ -35,6 +35,14 @@ export class FirebaseUserRepository implements UserRepository {
     } catch (err) {
       console.log(err);
       return null;
+    }
+  }
+
+  async logoutUser(dispatch: AppDispatch): Promise<void> {
+    try {
+      await dispatch(logoutUserAsync());
+    } catch (err) {
+      console.log(err);
     }
   }
 }

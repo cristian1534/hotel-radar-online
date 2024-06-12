@@ -1,47 +1,32 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import { loginUserAsync } from "@/services/userService";
-import { RootState } from "../redux/store/store";
 
 interface LoginFormProps {
   setShowLoginForm: (show: boolean) => void;
-  setError: (error: string) => void;
-  error: string;
   handleSubmit: (formData: any) => Promise<void>;
 }
 
-const LoginForm = ({ setShowLoginForm, setError, error }: LoginFormProps) => {
+const LoginForm: React.FC<LoginFormProps> = ({ setShowLoginForm, handleSubmit}) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const router = useRouter();
+ 
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  
   const handleSubmitLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = await (dispatch as any)(loginUserAsync(formData));
-    if (loginUserAsync.rejected.match(result)) {
-      setError(result.payload as string);
-      setFormData({ email: "", password: "" });
-    } else {
-      router.push("/panel");
+    try {
+      e.preventDefault();
+      await handleSubmit(formData);
+    } catch (err: any) {
+      console.log(err);
     }
   };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmitLogin}>
-      {error && (
-        <div className="flex justify-center items-center">
-          <span className="text-white bg-red-400 shadow-lg shadow-red-300 rounded-md py-2 px-4">
-            {error}
-          </span>
-        </div>
-      )}
       <div className="relative">
         <input
           type="email"
@@ -121,7 +106,6 @@ const LoginForm = ({ setShowLoginForm, setError, error }: LoginFormProps) => {
           type="button"
           className="text-brand-200"
           onClick={() => {
-            setError("");
             setShowLoginForm(false);
           }}
         >

@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
-import { addUserAsync } from "@/services/userService";
 
 interface RegisterFormProps {
-  setShowLoginForm: (show: boolean) => void;
-  setError: (error: string) => void;
-  error: string;
+  setShowLoginForm: (show:boolean) => void;
   handleSubmit: (formData: any) => Promise<void>;
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
   setShowLoginForm,
-  setError,
-  error,
+  handleSubmit,
 }) => {
   const [formData, setFormData] = useState({
     username: "",
@@ -21,8 +15,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const router = useRouter();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,16 +24,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   const handleSubmitRegister = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      const { email, password, username } = formData;
-      const result = await (dispatch as any)(
-        addUserAsync({ email, password, username })
-      );
-      if (addUserAsync.rejected.match(result)) {
-        setError(result.payload as string);
-        setFormData({ username: "", email: "", password: "" });
-      } else {
-        router.push("/");
-      }
+      await handleSubmit(formData);
     } catch (err: any) {
       console.log(err);
     }
@@ -49,13 +32,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
   return (
     <form className="space-y-6" onSubmit={handleSubmitRegister}>
-      {error && (
-        <div className="flex justify-center items-center">
-          <span className="text-white bg-red-400 shadow-lg shadow-red-300 rounded-md py-2 px-4">
-            {error}
-          </span>
-        </div>
-      )}
       <div className="relative">
         <input
           type="text"
@@ -120,7 +96,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             >
               <path
                 fillRule="evenodd"
-                d="M1 9a9 9 0 0116 0 9 9 0 01-16 0zm9-7a7 7 0 017 7 7 7 0 01-7 7 7 7 0 01-7-7zm-4 7a4 4 0 118 0 4 4 0 01-8 0z"
+                d="M1 9a9 9 0 0116 0 9 9 0 01-16 0zm9-7a7 7 0 017 7 7 7 0 01-7 7zm-4 7a4 4 0 118 0 4 4 0 01-8 0z"
                 clipRule="evenodd"
               />
             </svg>
@@ -152,7 +128,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           type="button"
           className="text-brand-200"
           onClick={() => {
-            setError("");
             setShowLoginForm(true);
           }}
         >
