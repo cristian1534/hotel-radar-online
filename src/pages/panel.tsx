@@ -1,9 +1,9 @@
-
 import React, { useEffect } from "react";
 import { Inter } from "next/font/google";
 import useAuthentication from "@/adapters/ui/components/customs/useAuthentication";
 import { useRouter } from "next/navigation";
 import Loader from "@/adapters/ui/components/customs/Loader";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +14,7 @@ interface FirebaseUser {
 const Panel: React.FC = () => {
   const user: FirebaseUser | null = useAuthentication();
   const router = useRouter();
+
 
   useEffect(() => {
     if (!user) {
@@ -47,6 +48,6 @@ const Panel: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Panel;

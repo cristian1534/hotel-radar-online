@@ -18,6 +18,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootState) => state.user);
   const error = useSelector((state: RootState) => state.user.error);
+  
 
   useEffect(() => {
     if (error) {

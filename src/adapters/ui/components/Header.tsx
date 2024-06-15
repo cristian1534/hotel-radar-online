@@ -5,7 +5,7 @@ import { routes } from "@/domain/utils/routes";
 import { useDispatch } from "react-redux";
 import { logoutUserAsync } from "@/services/userService";
 import useAuthentication from "./customs/useAuthentication";
-
+import { useError } from "../errors/errorContext";
 
 
 export default function Header() {
@@ -13,11 +13,13 @@ export default function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useAuthentication();
+  const { setError } = useError();
 
   
   const logOut = () => {
-    (dispatch as any)(logoutUserAsync());
-    router.push("/");
+    setError("Ups something was wrong")
+    // (dispatch as any)(logoutUserAsync());
+    // router.push("/");
   }
   
 

@@ -25,7 +25,14 @@ const initialState: UserState = {
 export const UserEntitySlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    clearError: (state) => {
+      state.error = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addUserAsync.pending, (state) => {
@@ -74,6 +81,7 @@ export const UserEntitySlice = createSlice({
   },
 });
 
+export const { setError, clearError } = UserEntitySlice.actions;
 export default UserEntitySlice.reducer;
 
 export interface RootState {
