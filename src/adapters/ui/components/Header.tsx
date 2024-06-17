@@ -3,25 +3,19 @@ import Modal from "@/adapters/ui/components/customs/Modal";
 import { useRouter } from "next/navigation";
 import { routes } from "@/domain/utils/routes";
 import { useDispatch } from "react-redux";
-import { logoutUserAsync } from "@/services/userService";
+import { logoutUserAsync } from "@/services/user/userService";
 import useAuthentication from "./customs/useAuthentication";
-import { useError } from "../errors/errorContext";
-
 
 export default function Header() {
   const [isModalOpen, setModalOpen] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useAuthentication();
-  const { setError } = useError();
 
-  
   const logOut = () => {
-    setError("Ups something was wrong")
-    // (dispatch as any)(logoutUserAsync());
-    // router.push("/");
-  }
-  
+    (dispatch as any)(logoutUserAsync());
+    router.push("/");
+  };
 
   const closeModal = () => setModalOpen(false);
   const openModal = () => setModalOpen(true);

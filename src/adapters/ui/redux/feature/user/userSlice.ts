@@ -3,8 +3,8 @@ import {
   addUserAsync,
   loginUserAsync,
   logoutUserAsync,
-} from "@/services/userService";
-import { UserEntity } from "@/domain/UserEntity";
+} from "@/services/user/userService";
+import { UserEntity } from "@/domain/user/UserEntity";
 
 interface UserState {
   users: UserEntity[];
@@ -31,7 +31,7 @@ export const UserEntitySlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder

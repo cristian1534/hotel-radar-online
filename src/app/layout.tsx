@@ -4,6 +4,9 @@ import "./globals.css";
 import { Provider } from "react-redux";
 import store from "@/adapters/ui/redux/store/store";
 
+import { ErrorProvider } from "@/adapters/ui/errors/errorContext";
+import ErrorComponent from "@/adapters/ui/errors/error";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -14,7 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider store={store}>{children}</Provider>
+        <Provider store={store}>
+          <ErrorProvider>
+            {children}
+            <ErrorComponent />
+          </ErrorProvider>
+        </Provider>
       </body>
     </html>
   );

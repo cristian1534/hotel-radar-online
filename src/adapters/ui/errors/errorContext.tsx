@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   setError as setReduxError,
   clearError as clearReduxError,
-} from "@/adapters/ui/redux/feature/userSlice";
+} from "@/adapters/ui/redux/feature/user/userSlice";
 
 interface ErrorContextProps {
   setError: (message: string) => void;

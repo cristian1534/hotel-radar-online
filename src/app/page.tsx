@@ -7,8 +7,9 @@ import Loader from "@/adapters/ui/components/customs/Loader";
 import LoginForm from "@/adapters/ui/components/LoginForm";
 import RegisterForm from "@/adapters/ui/components/RegisterForm";
 import { RootState } from "@/adapters/ui/redux/store/store";
-import { FirebaseUserRepository } from "@/adapters/infrastructure/firebase/firebaseUserRepository";
-import { UserEntity } from "@/domain/UserEntity";
+import { FirebaseUserRepository } from "@/adapters/infrastructure/firebase/user/firebaseUserRepository";
+import { UserEntity } from "@/domain/user/UserEntity";
+import { useError } from "@/adapters/ui/errors/errorContext";
 
 export default function Home() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state: RootState) => state.user);
   const error = useSelector((state: RootState) => state.user.error);
-  
+  const { setError } = useError();
 
   useEffect(() => {
     if (error) {
@@ -42,7 +43,7 @@ export default function Home() {
         router.push("/panel");
       }
     } catch (err: any) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -57,7 +58,7 @@ export default function Home() {
         router.push("/panel");
       }
     } catch (err: any) {
-      console.log(err);
+      setError(err.message);
     }
   };
 

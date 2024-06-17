@@ -5,8 +5,8 @@ import {
   updateProfile,
   signOut,
 } from "firebase/auth";
-import { UserEntity } from "@/domain/UserEntity";
-import { auth } from "@/adapters/infrastructure/firebase/firebaseConfig";
+import { UserEntity } from "@/domain/user/UserEntity";
+import { auth } from "@/adapters/infrastructure/firebase/config/firebaseConfig";
 
 interface RegisterPayload {
   email: string;
@@ -18,7 +18,6 @@ interface LoginPayload {
   email: string;
   password: string;
 }
-
 
 export const addUserAsync = createAsyncThunk<UserEntity, RegisterPayload>(
   "user/addUser",
@@ -78,7 +77,7 @@ export const loginUserAsync = createAsyncThunk<UserEntity, LoginPayload>(
 );
 
 export const logoutUserAsync = createAsyncThunk<void, void>(
-  'user/logoutUser',
+  "user/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
       await signOut(auth);
@@ -87,4 +86,3 @@ export const logoutUserAsync = createAsyncThunk<void, void>(
     }
   }
 );
-

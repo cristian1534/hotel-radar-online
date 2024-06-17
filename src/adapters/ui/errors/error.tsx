@@ -1,12 +1,12 @@
 import React from "react";
 import { RootState } from "../redux/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { clearError } from "../redux/feature/userSlice";
+import { clearError } from "../redux/feature/user/userSlice";
 
 const ErrorComponent: React.FC = () => {
   const { error } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  
+
   if (!error) return null;
 
   return (

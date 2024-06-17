@@ -1,6 +1,10 @@
-import { UserEntity } from "@/domain/UserEntity";
-import { UserRepository } from "@/ports/UserRepository";
-import { addUserAsync, loginUserAsync, logoutUserAsync } from "@/services/userService";
+import { UserEntity } from "@/domain/user/UserEntity";
+import { UserRepository } from "@/ports/user/UserRepository";
+import {
+  addUserAsync,
+  loginUserAsync,
+  logoutUserAsync,
+} from "@/services/user/userService";
 import { AppDispatch } from "@/adapters/ui/redux/store/store";
 
 export class FirebaseUserRepository implements UserRepository {
