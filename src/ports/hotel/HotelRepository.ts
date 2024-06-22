@@ -2,7 +2,7 @@ import { AppDispatch } from "@/adapters/ui/redux/store/store";
 import { HotelEntity } from "@/domain/hotel/hotelEntity";
 
 export interface HotelRepository {
-  addHotel(
+  add(
     hotel: HotelEntity,
     dispatch: AppDispatch
   ): Promise<HotelEntity | null>;

@@ -35,5 +35,6 @@ export const usersRef = collection(db, "users");
 export const hotelsRef = collection(db, "hotels");
 export const roomsRef = collection(db, "rooms");
 export const conciergeRef = collection(db, "concierges");
+export const loungeRef = collection(db, "lounges");
 
 export default app;

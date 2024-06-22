@@ -3,7 +3,7 @@ import UserEntitySlice from "../feature/user/userSlice";
 import HotelEntitySlice  from "../feature/hotel/hotelSlice";
 import RoomEntitySlice  from "../feature/room/roomSlice";
 import conciergeSlice from "../feature/concierge/conciergeSlice";
-
+import loungeSlice from "../feature/lounge/loungeSlice";
 
 
 const store = configureStore({
@@ -12,6 +12,7 @@ const store = configureStore({
     hotel: HotelEntitySlice,
     room: RoomEntitySlice,
     concierge: conciergeSlice,
+    lounge: loungeSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
