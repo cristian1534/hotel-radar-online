@@ -1,16 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { HotelEntity } from "@/domain/hotel/hotelEntity";
 import { hotelsRef } from "@/adapters/infrastructure/firebase/config/firebaseConfig";
-import { addDoc, getDoc } from "firebase/firestore";
+import { addDoc, getDoc, updateDoc } from "firebase/firestore";
 
 interface RegisterHotelPayload {
-  id: string;
   name: string;
+  email: string;
   address: string;
   state: string;
   telephone: number;
   zip: number;
   userId: string;
+  image: string;
 }
 
 export const addHotelAsync = createAsyncThunk<
@@ -18,24 +19,25 @@ export const addHotelAsync = createAsyncThunk<
   RegisterHotelPayload
 >(
   "hotel/addHotel",
-  async ({ name, address, state, telephone, zip, userId }, { rejectWithValue }) => {
+  async ({ name, email, address, state, telephone, zip, userId, image }, { rejectWithValue }) => {
     try {
       const hotelCredential = await addDoc(hotelsRef, {
         name: name,
+        email: email,
         address: address,
         state: state,
         telephone: telephone,
         zip: zip,
         userId: userId,
+        image: image,
       });
+      await updateDoc(hotelCredential, {hotelId: hotelCredential.id});
+
 
       const hotelSnapshot = await getDoc(hotelCredential);
       const hotelData = hotelSnapshot.data();
-
-      return {
-        id: hotelCredential.id,
-        ...hotelData,
-      } as HotelEntity;
+      
+     return { ...hotelData, hotelId: hotelsRef.id} as HotelEntity;
     } catch (error: any) {
       console.error("Register Hotel error: ", error);
       return rejectWithValue(error.message);

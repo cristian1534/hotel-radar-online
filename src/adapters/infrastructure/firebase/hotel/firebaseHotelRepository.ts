@@ -5,7 +5,7 @@ import { addHotelAsync } from "@/services/hotel/hotelService";
 
 
 export class FirebaseHotelRepository implements HotelRepository {
-    async addHotel(hotel: HotelEntity, dispatch: AppDispatch):Promise<HotelEntity|null>{
+    async add(hotel: HotelEntity, dispatch: AppDispatch):Promise<HotelEntity|null>{
         try{
             const resultAction = await dispatch(addHotelAsync(hotel));
             if(addHotelAsync.fulfilled.match(resultAction)){

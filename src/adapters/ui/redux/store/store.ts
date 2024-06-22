@@ -1,11 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import UserEntitySlice from "../feature/user/userSlice";
 import HotelEntitySlice  from "../feature/hotel/hotelSlice";
+import RoomEntitySlice  from "../feature/room/roomSlice";
+import conciergeSlice from "../feature/concierge/conciergeSlice";
+
+
 
 const store = configureStore({
   reducer: {
     user: UserEntitySlice,
     hotel: HotelEntitySlice,
+    room: RoomEntitySlice,
+    concierge: conciergeSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
