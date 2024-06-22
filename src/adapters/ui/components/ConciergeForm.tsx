@@ -5,15 +5,14 @@ import Loader from "./customs/Loader";
 import { FirebaseConciergeRepository } from "@/adapters/infrastructure/firebase/concierge/firebaseConciergeRepository";
 import useHandleSubmit from "../components/customs/useSubmit";
 
-
 export default function ConciergeForm() {
-  const [concierge, setConcierge ] = useState({
+  const [concierge, setConcierge] = useState({
     id: "",
     schedule: "",
     events: "",
     contactInfo: "",
     hotelId: "",
-  })
+  });
   const { loading } = useSelector((state: RootState) => state.concierge);
   const conciergeRepository = new FirebaseConciergeRepository();
   const handleSubmit = useHandleSubmit();
@@ -22,16 +21,14 @@ export default function ConciergeForm() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setConcierge({...concierge, [name]: value });
+    setConcierge({ ...concierge, [name]: value });
   };
-
- 
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const result = await handleSubmit(conciergeRepository, concierge, "");
-      if(result) {
+      if (result) {
         alert("Concierge Added");
         setConcierge({
           id: "",
@@ -41,11 +38,10 @@ export default function ConciergeForm() {
           hotelId: "",
         });
       }
-    }catch(err: any) {
-      console.log(err);
+    } catch (err: any) {
+      return err;
     }
-  }
-  
+  };
 
   return (
     <>

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import useAuthentication from "./useAuthentication";
 import useUploadImage from "./useUploadImage";
 
+
 interface RepositoryProps {
   add: (item: any, dispatch: any) => void;
 }
@@ -34,8 +35,8 @@ const useHandleSubmit = () => {
       };
       const result = await repository.add(newItem, dispatch);
       return result as any;
-    } catch (e) {
-      console.log(e);
+    } catch (err: any) {
+      return err;
     }
   };
 
