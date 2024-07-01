@@ -1,51 +1,69 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-
-interface SpaFormData {
-  image: File | null;
-  name: string;
-  description: string;
-  price: string;
-  reserve: string;
-  schedule: string;
-}
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import useHandleSubmit from "./customs/useSubmit";
+import { FirebaseSpaRepository } from "@/adapters/infrastructure/spa/firebaseSpaRepository";
 
 export default function SpaForm() {
-  const [formData, setFormData] = useState<SpaFormData>({
-    image: null,
-    name: '',
-    description: '',
-    price: '',
-    reserve: '',
-    schedule: '',
+  const [spa, setSpa] = useState({
+    id: "",
+    image: null as File | null,
+    name: "",
+    description: "",
+    price: "",
+    reserve: "",
+    schedule: "",
   });
+  const spaRepository = new FirebaseSpaRepository();
+  const handleSubmit = useHandleSubmit();
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setFormData({ ...formData, image: file });
+    setSpa({ ...spa, image: file });
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setSpa({
+      ...spa,
+      [name]: name === "price" ? (value === "" ? 0 : parseInt(value)) : value,
+    });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Aquí podrías enviar formData a tu API o realizar otras operaciones necesarias
+    try {
+      const result = await handleSubmit(spaRepository, spa, "spas");
+      if (result) {
+        alert("Spa Treatment Added");
+        setSpa({
+          id: "",
+          image: null,
+          name: "",
+          description: "",
+          price: "",
+          reserve: "",
+          schedule: "",
+        });
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   return (
     <div className="max-w-md m-2 bg-brand-50 p-5 shadow-md">
-      <form onSubmit={handleSubmit}>
-        <h2 className="text-brand-50 dark:text-brand-200 text-2xl mb-6 text-center font-bold">Set a New Spa Treatment</h2>
+      <form onSubmit={onSubmit}>
+        <h2 className="text-brand-50 dark:text-brand-200 text-2xl mb-6 text-center font-bold">
+          Set a New Spa Treatment
+        </h2>
 
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="text"
             name="name"
             id="name"
-            value={formData.name}
+            value={spa.name}
             onChange={handleChange}
             className="block py-2.5 px-0 w-full text-sm text-brand-300 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-brand-200 dark:border-brand-200 dark:focus:border-brand-300 focus:outline-none focus:ring-0 focus:border-brand-200 peer"
             placeholder=" "
@@ -63,7 +81,7 @@ export default function SpaForm() {
           <textarea
             name="description"
             id="description"
-            value={formData.description}
+            value={spa.description}
             onChange={handleChange}
             className="block py-2.5 px-0 w-full text-sm text-brand-300 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-brand-200 dark:border-brand-200 dark:focus:border-brand-300 focus:outline-none focus:ring-0 focus:border-brand-200 peer"
             placeholder=" "
@@ -82,7 +100,7 @@ export default function SpaForm() {
             type="number"
             name="price"
             id="price"
-            value={formData.price}
+            value={spa.price}
             onChange={handleChange}
             className="block py-2.5 px-0 w-full text-sm text-brand-300 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-brand-200 dark:border-brand-200 dark:focus:border-brand-300 focus:outline-none focus:ring-0 focus:border-brand-200 peer"
             placeholder=" "
@@ -101,7 +119,7 @@ export default function SpaForm() {
             type="text"
             name="reserve"
             id="reserve"
-            value={formData.reserve}
+            value={spa.reserve}
             onChange={handleChange}
             className="block py-2.5 px-0 w-full text-sm text-brand-300 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-brand-200 dark:border-brand-200 dark:focus:border-brand-300 focus:outline-none focus:ring-0 focus:border-brand-200 peer"
             placeholder=" "
@@ -120,7 +138,7 @@ export default function SpaForm() {
             type="text"
             name="schedule"
             id="schedule"
-            value={formData.schedule}
+            value={spa.schedule}
             onChange={handleChange}
             className="block py-2.5 px-0 w-full text-sm text-brand-300 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-brand-200 dark:border-brand-200 dark:focus:border-brand-300 focus:outline-none focus:ring-0 focus:border-brand-200 peer"
             placeholder=" "
