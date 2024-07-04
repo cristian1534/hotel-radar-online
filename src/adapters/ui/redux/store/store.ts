@@ -5,6 +5,7 @@ import RoomEntitySlice  from "../feature/room/roomSlice";
 import conciergeSlice from "../feature/concierge/conciergeSlice";
 import loungeSlice from "../feature/lounge/loungeSlice";
 import spaSlice from "../feature/spa/spaSlice";
+import serviceSlice from "../feature/service/serviceSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     concierge: conciergeSlice,
     lounge: loungeSlice,
     spa: spaSlice,
+    service: serviceSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
