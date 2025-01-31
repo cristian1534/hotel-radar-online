@@ -63,28 +63,36 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-brand-300">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-900">
       {loading ? (
         <Loader />
       ) : (
-        <>
-          <Image
-            src="https://res.cloudinary.com/dutafv5us/image/upload/v1717507288/HotelRadarLogo_z5jpt3.png"
-            alt="Panel-Logo"
-            width={400}
-            height={400}
-            priority={true}
-          />
-          <div className="max-w-sm w-full p-8 space-y-6 bg-white rounded-lg shadow-lg shadow-brand-50 mb-5">
-            <h2 className="text-3xl font-bold text-center uppercase text-brand-100 dark:text-brand-200">
-              <span className="text-green-300 text-sm mr-5">Online</span>
-              Dashboard
-            </h2>
-            {errorVisible && (
-              <div className="flex justify-center items-center">
-                <span className="text-white bg-red-400 shadow-lg shadow-red-300 rounded-md py-2 px-4">
-                  {error}
+        <div className="w-full max-w-md px-6">
+          <div className="mb-8 text-center">
+            <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-indigo-400 to-purple-400 inline-block text-transparent bg-clip-text flex items-center justify-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+              HotelRadar
+            </div>
+            <p className="text-gray-400 text-lg">Management System</p>
+          </div>
+          <div className="bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-700">
+            <div className="text-center space-y-2 mb-6">
+              <div className="inline-flex items-center justify-center gap-2">
+                <span className="flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
+                <span className="text-green-500 text-sm font-medium">Online</span>
+              </div>
+              <h2 className="text-3xl font-bold text-white">Dashboard</h2>
+            </div>
+            {errorVisible && (
+              <div className="mb-6">
+                <div className="bg-red-500/10 border-l-4 border-red-500 p-4 rounded">
+                  <p className="text-red-400 text-sm">{error}</p>
+                </div>
               </div>
             )}
             {showLoginForm ? (
@@ -99,7 +107,7 @@ export default function Home() {
               />
             )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
